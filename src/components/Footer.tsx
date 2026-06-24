@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Sparkles, Github, Mail, Heart, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { BRAND } from "@/data/brand";
 
 const footerLinks = [
   { path: "/team", label: "团队名片" },
@@ -24,11 +25,11 @@ export function Footer() {
             <Link to="/" className="flex items-center gap-2.5 group w-fit">
               <Sparkles className="w-5 h-5 text-primary group-hover:text-secondary transition-colors duration-300" />
               <span className="font-display font-bold text-xl text-textPrimary tracking-tight">
-                Dream of Youth
+                {BRAND.name}
               </span>
             </Link>
             <p className="text-textSecondary text-sm leading-relaxed max-w-sm">
-              用创意点亮青春，用梦想驱动未来。我们是一支充满激情的年轻团队，致力于创造令人惊叹的数字体验。
+              {BRAND.subtitle} — {BRAND.taglineZh}
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a
@@ -93,11 +94,11 @@ export function Footer() {
 
         <div className="mt-14 pt-8 border-t border-white/[0.04] flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-textMuted text-xs">
-            &copy; {new Date().getFullYear()} Dream of Youth. All rights reserved.
+            &copy; {new Date().getFullYear()} {BRAND.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <p className="text-textMuted text-xs flex items-center gap-1.5">
-              Made with <Heart className="w-3 h-3 text-secondary animate-pulse" /> by Dream of Youth Team
+              Made with <Heart className="w-3 h-3 text-secondary animate-pulse" /> by {BRAND.teamName}
             </p>
             <button
               onClick={scrollToTop}

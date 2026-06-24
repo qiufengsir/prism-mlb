@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
+import { BRAND } from "@/data/brand";
 
 const navItems = [
   { path: "/", label: "首页" },
@@ -58,7 +59,7 @@ export function Navbar() {
                 />
               </div>
               <span className="font-display font-bold text-lg md:text-xl text-textPrimary tracking-tight">
-                Dream of Youth
+                {BRAND.name}
               </span>
             </Link>
 
