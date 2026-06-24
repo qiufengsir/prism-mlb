@@ -4,8 +4,10 @@ import { X, ExternalLink, FolderGit2, Trash2, Users } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { useStore } from "@/store/useStore";
-import { BRAND } from "@/data/brand";
+import { useTranslation } from "@/hooks/useTranslation";
 import type { Project } from "@/data/initialData";
+
+import { formatText } from "@/i18n";
 
 function ProjectDetailModal({
   project,
@@ -14,6 +16,8 @@ function ProjectDetailModal({
   project: Project;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -53,7 +57,7 @@ function ProjectDetailModal({
           </p>
 
           <div className="mb-7">
-            <h3 className="text-sm font-semibold text-textPrimary mb-3 uppercase tracking-wider opacity-70">技术栈</h3>
+            <h3 className="text-sm font-semibold text-textPrimary mb-3 uppercase tracking-wider opacity-70">{t.projects.techStack}</h3>
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((tech) => (
                 <span
@@ -69,7 +73,7 @@ function ProjectDetailModal({
           <div className="mb-8">
             <h3 className="text-sm font-semibold text-textPrimary mb-3 uppercase tracking-wider opacity-70 flex items-center gap-2">
               <Users className="w-4 h-4" />
-              参与成员
+              {t.projects.members}
             </h3>
             <div className="flex flex-wrap gap-2">
               {project.members.map((member) => (
@@ -92,7 +96,7 @@ function ProjectDetailModal({
               className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary to-secondary rounded-xl text-white text-sm font-semibold hover:shadow-lg hover:shadow-primary/20 transition-all"
             >
               <ExternalLink className="w-4 h-4" />
-              查看项目
+              {t.projects.viewProject}
             </a>
           </div>
         </div>
@@ -103,14 +107,15 @@ function ProjectDetailModal({
 
 export function ProjectsPage() {
   const { projects, removeProject } = useStore();
+  const { t } = useTranslation();
   const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null);
 
   return (
     <div className="min-h-screen">
       <SEO
-        title={`项目案例 — ${BRAND.name}`}
-        description={`深入了解 ${BRAND.name} 的项目案例与 AI 驱动的产品解决方案。`}
-        keywords={`${BRAND.name}, 项目案例, AI Agent, 解决方案`}
+        title={t.seo.projects.title}
+        description={t.seo.projects.description}
+        keywords={t.seo.projects.keywords}
         canonical="/projects"
       />
       <section className="pt-28 md:pt-36 pb-16">
@@ -118,13 +123,14 @@ export function ProjectsPage() {
           <AnimatedSection className="text-center mb-20">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/[0.06] text-accent text-sm font-medium mb-6 border border-accent/[0.1]">
               <FolderGit2 className="w-4 h-4" />
-              项目案例
+              {t.projects.badge}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-textPrimary mb-4 tracking-tight">
-              我们的 <span className="gradient-text-static">项目集</span>
+              {t.projects.title}{" "}
+              <span className="gradient-text-static">{t.projects.titleHighlight}</span>
             </h1>
             <p className="text-textSecondary max-w-xl mx-auto text-balance">
-              深度项目案例筹备中，敬请期待。现阶段请浏览我们的作品集。
+              {t.projects.subtitle}
             </p>
           </AnimatedSection>
 
@@ -179,7 +185,7 @@ export function ProjectsPage() {
                     <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
                       <div className="flex items-center gap-1.5 text-xs text-textMuted">
                         <Users className="w-3 h-3" />
-                        {project.members.length} 人参与
+                        {formatText(t.projects.participatedCount, { count: project.members.length })}
                       </div>
                       <span className="text-textMuted text-xs">{project.date}</span>
                     </div>
@@ -192,7 +198,7 @@ export function ProjectsPage() {
           {projects.length === 0 && (
             <AnimatedSection className="text-center py-24">
               <FolderGit2 className="w-16 h-16 text-textMuted mx-auto mb-4 opacity-40" />
-              <p className="text-textSecondary">暂无项目</p>
+              <p className="text-textSecondary">{t.projects.empty}</p>
             </AnimatedSection>
           )}
         </div>

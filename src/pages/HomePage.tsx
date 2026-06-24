@@ -17,7 +17,8 @@ import { AnimatedSection } from "@/components/AnimatedSection";
 import { CountUp } from "@/components/CountUp";
 import { SEO } from "@/components/SEO";
 import { useStore } from "@/store/useStore";
-import { BRAND, BRAND_SEO, CAPABILITIES } from "@/data/brand";
+import { BRAND } from "@/data/brand";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const capabilityIcons = [Bot, Workflow, Brain, Rocket];
 const capabilityColors = [
@@ -28,12 +29,11 @@ const capabilityColors = [
 ];
 const capabilityIconColors = ["text-primary", "text-secondary", "text-accent", "text-glowPurple"];
 
-const quickNavItems = [
+const quickNavConfig = [
   {
     path: "/team",
     icon: Users,
-    title: "团队名片",
-    description: "认识我们的核心成员",
+    key: "team" as const,
     color: "from-glowPurple/20 to-primary/5",
     iconColor: "text-primary",
     borderColor: "group-hover:border-primary/30",
@@ -42,8 +42,7 @@ const quickNavItems = [
   {
     path: "/works",
     icon: Palette,
-    title: "作品集",
-    description: "探索创意与设计",
+    key: "works" as const,
     color: "from-secondary/20 to-secondary/5",
     iconColor: "text-secondary",
     borderColor: "group-hover:border-secondary/30",
@@ -52,8 +51,7 @@ const quickNavItems = [
   {
     path: "/projects",
     icon: FolderGit2,
-    title: "项目集",
-    description: "查看我们的项目案例",
+    key: "projects" as const,
     color: "from-accent/20 to-accent/5",
     iconColor: "text-accent",
     borderColor: "group-hover:border-accent/30",
@@ -62,8 +60,7 @@ const quickNavItems = [
   {
     path: "/media",
     icon: Image,
-    title: "媒体库",
-    description: "照片与视频展示",
+    key: "media" as const,
     color: "from-glowPink/20 to-primary/5",
     iconColor: "text-glowPink",
     borderColor: "group-hover:border-glowPink/30",
@@ -127,6 +124,8 @@ function FloatingOrbs() {
 }
 
 function HeroSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <FloatingOrbs />
@@ -141,7 +140,7 @@ function HeroSection() {
         >
           <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-textSecondary text-sm font-medium mb-8 backdrop-blur-sm">
             <Sparkles className="w-4 h-4 text-primary" />
-            AI Agent · 高效编码 · 产品落地
+            {t.home.badge}
           </span>
         </motion.div>
 
@@ -160,7 +159,7 @@ function HeroSection() {
           transition={{ duration: 0.8, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="text-base md:text-lg text-textSecondary mb-3 font-medium tracking-wide"
         >
-          {BRAND.subtitle}
+          {t.brand.subtitle}
         </motion.p>
 
         <motion.p
@@ -169,7 +168,7 @@ function HeroSection() {
           transition={{ duration: 0.8, delay: 0.62, ease: [0.22, 1, 0.36, 1] }}
           className="text-sm md:text-base text-primary/90 mb-8 font-light italic"
         >
-          {BRAND.tagline}
+          {t.brand.tagline}
         </motion.p>
 
         <motion.p
@@ -178,7 +177,7 @@ function HeroSection() {
           transition={{ duration: 0.9, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-lg md:text-xl text-textSecondary max-w-2xl mx-auto mb-12 leading-relaxed font-light text-balance"
         >
-          我们是一支从校园走向职场的私人团队，擅长运用 AI Agent、Harness 架构、Skills 与 Memory 等方法，把想法高效编码、快速落地为真实产品。
+          {t.home.intro}
         </motion.p>
 
         <motion.div
@@ -193,7 +192,7 @@ function HeroSection() {
           >
             <span className="absolute inset-0 bg-gradient-to-r from-secondary via-primary to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <span className="relative z-10 flex items-center gap-2">
-              认识我们
+              {t.home.ctaTeam}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </span>
           </Link>
@@ -201,7 +200,7 @@ function HeroSection() {
             to="/works"
             className="px-8 py-4 border border-white/[0.08] rounded-xl text-textPrimary font-medium hover:bg-white/[0.03] hover:border-white/[0.15] transition-all duration-300 backdrop-blur-sm"
           >
-            浏览作品
+            {t.home.ctaWorks}
           </Link>
         </motion.div>
       </div>
@@ -224,20 +223,23 @@ function HeroSection() {
 }
 
 function CapabilitiesSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 md:py-36 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection className="text-center mb-20">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-textPrimary mb-4 tracking-tight">
-            我们擅长 <span className="gradient-text-static">什么</span>
+            {t.home.capabilitiesTitle}{" "}
+            <span className="gradient-text-static">{t.home.capabilitiesTitleHighlight}</span>
           </h2>
           <p className="text-textSecondary max-w-lg mx-auto text-balance">
-            不只是写代码，而是搭建一套可复用的 AI 驱动工作流
+            {t.home.capabilitiesSubtitle}
           </p>
         </AnimatedSection>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {CAPABILITIES.map((item, index) => {
+          {t.capabilities.map((item, index) => {
             const Icon = capabilityIcons[index];
             return (
               <AnimatedSection key={item.title} delay={index * 0.1}>
@@ -261,12 +263,13 @@ function CapabilitiesSection() {
 
 function StatsSection() {
   const { teamMembers, works, projects, media } = useStore();
+  const { t } = useTranslation();
 
   const stats = [
-    { icon: Users, value: teamMembers.length, label: "团队成员", suffix: "+", color: "from-primary to-glowPurple", shadow: "shadow-primary/20" },
-    { icon: Palette, value: works.length, label: "创意作品", suffix: "+", color: "from-secondary to-glowPink", shadow: "shadow-secondary/20" },
-    { icon: FolderGit2, value: projects.length, label: "完成项目", suffix: "+", color: "from-accent to-amber-400", shadow: "shadow-accent/15" },
-    { icon: Image, value: media.length, label: "媒体资源", suffix: "+", color: "from-glowPurple to-glowPink", shadow: "shadow-primary/15" },
+    { icon: Users, value: teamMembers.length, label: t.home.statsTeam, suffix: "+", color: "from-primary to-glowPurple", shadow: "shadow-primary/20" },
+    { icon: Palette, value: works.length, label: t.home.statsWorks, suffix: "+", color: "from-secondary to-glowPink", shadow: "shadow-secondary/20" },
+    { icon: FolderGit2, value: projects.length, label: t.home.statsProjects, suffix: "+", color: "from-accent to-amber-400", shadow: "shadow-accent/15" },
+    { icon: Image, value: media.length, label: t.home.statsMedia, suffix: "+", color: "from-glowPurple to-glowPink", shadow: "shadow-primary/15" },
   ];
 
   return (
@@ -275,10 +278,11 @@ function StatsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection className="text-center mb-20">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-textPrimary mb-4 tracking-tight">
-            用作品 <span className="gradient-text-static">说话</span>
+            {t.home.statsTitle}{" "}
+            <span className="gradient-text-static">{t.home.statsTitleHighlight}</span>
           </h2>
           <p className="text-textSecondary max-w-lg mx-auto text-balance">
-            每一个数字背后，都是一次真实的投入与落地
+            {t.home.statsSubtitle}
           </p>
         </AnimatedSection>
 
@@ -304,6 +308,7 @@ function StatsSection() {
 
 function FeaturedSection() {
   const { works, projects } = useStore();
+  const { t } = useTranslation();
   const featuredWorks = works.slice(0, 3);
   const featuredProjects = projects.slice(0, 2);
 
@@ -312,10 +317,11 @@ function FeaturedSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection className="text-center mb-20">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-textPrimary mb-4 tracking-tight">
-            我们的 <span className="gradient-text-static">作品</span>
+            {t.home.featuredTitle}{" "}
+            <span className="gradient-text-static">{t.home.featuredTitleHighlight}</span>
           </h2>
           <p className="text-textSecondary max-w-lg mx-auto text-balance">
-            从大学到职场，记录每一次真实的创造
+            {t.home.featuredSubtitle}
           </p>
         </AnimatedSection>
 
@@ -324,7 +330,7 @@ function FeaturedSection() {
             <div>
               <AnimatedSection className="flex items-center gap-3 mb-8">
                 <Palette className="w-5 h-5 text-secondary" />
-                <h3 className="font-display text-xl font-bold text-textPrimary">作品集</h3>
+                <h3 className="font-display text-xl font-bold text-textPrimary">{t.home.featuredWorks}</h3>
               </AnimatedSection>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {featuredWorks.map((work, index) => (
@@ -361,7 +367,7 @@ function FeaturedSection() {
             <div>
               <AnimatedSection className="flex items-center gap-3 mb-8">
                 <FolderGit2 className="w-5 h-5 text-accent" />
-                <h3 className="font-display text-xl font-bold text-textPrimary">项目集</h3>
+                <h3 className="font-display text-xl font-bold text-textPrimary">{t.home.featuredProjects}</h3>
               </AnimatedSection>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {featuredProjects.map((project, index) => (
@@ -407,21 +413,23 @@ function FeaturedSection() {
 }
 
 function QuickNavSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 md:py-36 relative">
       <div className="absolute inset-0 bg-gradient-to-t from-primary/[0.02] via-transparent to-transparent pointer-events-none" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection className="text-center mb-20">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-textPrimary mb-4 tracking-tight">
-            探索更多
+            {t.home.exploreTitle}
           </h2>
           <p className="text-textSecondary max-w-lg mx-auto text-balance">
-            点击以下板块，深入了解我们的团队
+            {t.home.exploreSubtitle}
           </p>
         </AnimatedSection>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-          {quickNavItems.map((item, index) => (
+          {quickNavConfig.map((item, index) => (
             <AnimatedSection key={item.path} delay={index * 0.1}>
               <Link
                 to={item.path}
@@ -433,11 +441,11 @@ function QuickNavSection() {
                   <item.icon className={`w-5 h-5 ${item.iconColor}`} />
                 </div>
                 <h3 className="font-semibold text-textPrimary text-lg mb-2 group-hover:text-primary transition-colors duration-300">
-                  {item.title}
+                  {t.home.quickNav[item.key].title}
                 </h3>
-                <p className="text-textSecondary text-sm leading-relaxed">{item.description}</p>
+                <p className="text-textSecondary text-sm leading-relaxed">{t.home.quickNav[item.key].description}</p>
                 <div className="mt-5 flex items-center text-primary text-sm font-medium opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-                  查看全部
+                  {t.common.viewAll}
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </div>
               </Link>
@@ -450,12 +458,14 @@ function QuickNavSection() {
 }
 
 export function HomePage() {
+  const { t } = useTranslation();
+
   return (
     <div>
       <SEO
-        title={BRAND_SEO.defaultTitle}
-        description={BRAND_SEO.defaultDescription}
-        keywords={BRAND_SEO.defaultKeywords}
+        title={t.seo.home.title}
+        description={t.seo.home.description}
+        keywords={t.seo.home.keywords}
         canonical="/"
       />
       <HeroSection />

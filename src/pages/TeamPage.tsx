@@ -17,11 +17,17 @@ import {
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { useStore } from "@/store/useStore";
-import { BRAND } from "@/data/brand";
+import { getMemberLocale } from "@/i18n";
+import { useTranslation } from "@/hooks/useTranslation";
 import type { TeamMember } from "@/data/initialData";
 
 function TeamCard({ member, onDelete }: { member: TeamMember; onDelete: (id: string) => void }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { locale, t } = useTranslation();
+  const localized = getMemberLocale(locale, member.id);
+  const role = localized?.role ?? member.role;
+  const bio = localized?.bio ?? member.bio;
+  const skills = localized?.skills ?? member.skills;
 
   return (
     <motion.div
@@ -60,15 +66,15 @@ function TeamCard({ member, onDelete }: { member: TeamMember; onDelete: (id: str
           {member.name}
         </h3>
         <p className="text-primary text-sm font-medium mb-3 bg-primary/[0.06] inline-block px-2.5 py-0.5 rounded-full">
-          {member.role}
+          {role}
         </p>
 
         <p className="text-textSecondary text-sm leading-relaxed mb-4 line-clamp-2">
-          {member.bio}
+          {bio}
         </p>
 
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {member.skills.slice(0, 3).map((skill) => (
+          {skills.slice(0, 3).map((skill) => (
             <span
               key={skill}
               className="text-xs bg-white/[0.04] border border-white/[0.04] text-textSecondary px-2.5 py-1 rounded-lg"
@@ -76,9 +82,9 @@ function TeamCard({ member, onDelete }: { member: TeamMember; onDelete: (id: str
               {skill}
             </span>
           ))}
-          {member.skills.length > 3 && (
+          {skills.length > 3 && (
             <span className="text-xs text-textMuted px-2 py-1">
-              +{member.skills.length - 3}
+              +{skills.length - 3}
             </span>
           )}
         </div>
@@ -87,7 +93,7 @@ function TeamCard({ member, onDelete }: { member: TeamMember; onDelete: (id: str
           onClick={() => setIsExpanded(!isExpanded)}
           className="text-primary text-sm font-medium hover:underline underline-offset-4 transition-all"
         >
-          {isExpanded ? "收起详情" : "查看详情"}
+          {isExpanded ? t.common.hideDetails : t.common.viewDetails}
         </button>
       </div>
 
@@ -119,7 +125,7 @@ function TeamCard({ member, onDelete }: { member: TeamMember; onDelete: (id: str
                     className="flex items-center gap-2 text-textSecondary hover:text-primary transition-colors text-sm bg-white/[0.03] px-3 py-1.5 rounded-lg"
                   >
                     <Mail className="w-4 h-4" />
-                    邮箱
+                    {t.team.email}
                   </a>
                 )}
                 {member.social.website && (
@@ -130,12 +136,12 @@ function TeamCard({ member, onDelete }: { member: TeamMember; onDelete: (id: str
                     className="flex items-center gap-2 text-textSecondary hover:text-primary transition-colors text-sm bg-white/[0.03] px-3 py-1.5 rounded-lg"
                   >
                     <Globe className="w-4 h-4" />
-                    网站
+                    {t.team.website}
                   </a>
                 )}
               </div>
               <p className="text-textMuted text-xs mt-5">
-                加入时间：{member.joinDate}
+                {t.team.joinDate}：{member.joinDate}
               </p>
             </div>
           </motion.div>
@@ -154,6 +160,7 @@ function AddMemberModal({
   onClose: () => void;
   onAdd: (member: Omit<TeamMember, "id">) => void;
 }) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     role: "",
@@ -224,9 +231,9 @@ function AddMemberModal({
               </div>
               <div>
                 <h3 className="font-display font-bold text-lg text-textPrimary">
-                  添加成员
+                  {t.team.addMember}
                 </h3>
-                <p className="text-textMuted text-xs">填写成员信息</p>
+                <p className="text-textMuted text-xs">{t.team.fillInfo}</p>
               </div>
             </div>
             <button
@@ -242,7 +249,7 @@ function AddMemberModal({
               <div>
                 <label className="flex items-center gap-2 text-sm font-medium text-textSecondary mb-2">
                   <User className="w-4 h-4" />
-                  姓名 *
+                  {t.team.name} *
                 </label>
                 <input
                   type="text"
@@ -250,13 +257,13 @@ function AddMemberModal({
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-textPrimary placeholder-textMuted focus:outline-none focus:border-primary/40 focus:bg-white/[0.05] transition-all text-sm"
-                  placeholder="成员姓名"
+                  placeholder={t.team.namePlaceholder}
                 />
               </div>
               <div>
                 <label className="flex items-center gap-2 text-sm font-medium text-textSecondary mb-2">
                   <Briefcase className="w-4 h-4" />
-                  角色 *
+                  {t.team.role} *
                 </label>
                 <input
                   type="text"
@@ -264,7 +271,7 @@ function AddMemberModal({
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                   className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-textPrimary placeholder-textMuted focus:outline-none focus:border-primary/40 focus:bg-white/[0.05] transition-all text-sm"
-                  placeholder="例如：设计师"
+                  placeholder={t.team.rolePlaceholder}
                 />
               </div>
             </div>
@@ -272,7 +279,7 @@ function AddMemberModal({
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-textSecondary mb-2">
                 <FileText className="w-4 h-4" />
-                个人简介 *
+                {t.team.bio} *
               </label>
               <textarea
                 required
@@ -280,28 +287,28 @@ function AddMemberModal({
                 value={formData.bio}
                 onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                 className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-textPrimary placeholder-textMuted focus:outline-none focus:border-primary/40 focus:bg-white/[0.05] transition-all text-sm resize-none"
-                placeholder="请输入个人简介"
+                placeholder={t.team.bioPlaceholder}
               />
             </div>
 
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-textSecondary mb-2">
                 <Tag className="w-4 h-4" />
-                技能标签（用逗号分隔）
+                {t.team.skills}
               </label>
               <input
                 type="text"
                 value={formData.skills}
                 onChange={(e) => setFormData({ ...formData, skills: e.target.value })}
                 className="w-full px-4 py-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-textPrimary placeholder-textMuted focus:outline-none focus:border-primary/40 focus:bg-white/[0.05] transition-all text-sm"
-                placeholder="React, TypeScript, UI设计"
+                placeholder={t.team.skillsPlaceholder}
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-medium text-textSecondary mb-2 block">
-                  GitHub（可选）
+                  {t.team.github}（{t.common.optional}）
                 </label>
                 <input
                   type="url"
@@ -313,7 +320,7 @@ function AddMemberModal({
               </div>
               <div>
                 <label className="text-sm font-medium text-textSecondary mb-2 block">
-                  邮箱（可选）
+                  {t.team.email}（{t.common.optional}）
                 </label>
                 <input
                   type="email"
@@ -331,13 +338,13 @@ function AddMemberModal({
                 onClick={onClose}
                 className="flex-1 px-4 py-3 border border-white/[0.08] rounded-xl text-textSecondary hover:bg-white/[0.03] transition-all text-sm font-medium"
               >
-                取消
+                {t.team.cancel}
               </button>
               <button
                 type="submit"
                 className="flex-1 px-4 py-3 bg-gradient-to-r from-primary to-secondary rounded-xl text-white font-semibold hover:shadow-lg hover:shadow-primary/20 transition-all text-sm"
               >
-                添加成员
+                {t.team.submit}
               </button>
             </div>
           </form>
@@ -350,13 +357,14 @@ function AddMemberModal({
 export function TeamPage() {
   const { teamMembers, addTeamMember, removeTeamMember } = useStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen">
       <SEO
-        title={`团队介绍 — ${BRAND.name}`}
-        description={`认识 ${BRAND.name} 核心成员：AI Agent 驱动开发、全栈落地、视觉设计与产品顾问，从校园到职场的私人创意团队。`}
-        keywords={`${BRAND.name}, Prism, 团队介绍, AI Agent, 成员`}
+        title={t.seo.team.title}
+        description={t.seo.team.description}
+        keywords={t.seo.team.keywords}
         canonical="/team"
       />
       <section className="pt-28 md:pt-36 pb-16">
@@ -364,16 +372,17 @@ export function TeamPage() {
           <AnimatedSection className="text-center mb-20">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/[0.06] text-primary text-sm font-medium mb-6 border border-primary/[0.1]">
               <Users className="w-4 h-4" />
-              我们的团队
+              {t.team.badge}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-textPrimary mb-4 tracking-tight">
-              认识 <span className="gradient-text-static">{BRAND.name}</span>
+              {t.team.title}{" "}
+              <span className="gradient-text-static">{t.team.titleHighlight}</span>
             </h1>
             <p className="text-textSecondary max-w-2xl mx-auto text-balance mb-2">
-              {BRAND.subtitle} — 每个人都是一束光，合在一起才能折射更多可能。
+              {t.team.subtitle}
             </p>
             <p className="text-textMuted max-w-2xl mx-auto text-sm text-balance">
-              我们从校园出发，在工作里继续以业余团队的方式创造。用 AI 提升效率，用作品证明能力，用真诚对待每一次合作。
+              {t.team.description}
             </p>
           </AnimatedSection>
 
@@ -388,7 +397,7 @@ export function TeamPage() {
           {teamMembers.length === 0 && (
             <AnimatedSection className="text-center py-20">
               <Users className="w-16 h-16 text-textMuted mx-auto mb-4 opacity-50" />
-              <p className="text-textSecondary">暂无团队成员</p>
+              <p className="text-textSecondary">{t.team.empty}</p>
             </AnimatedSection>
           )}
         </div>

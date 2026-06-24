@@ -4,7 +4,7 @@ import { X, Palette, Trash2 } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { useStore } from "@/store/useStore";
-import { BRAND } from "@/data/brand";
+import { useTranslation } from "@/hooks/useTranslation";
 import { initialWorks } from "@/data/initialData";
 
 const categories = ["全部", "设计", "摄影", "视频", "其他"];
@@ -16,6 +16,8 @@ function WorkDetailModal({
   work: (typeof initialWorks)[0];
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -48,7 +50,7 @@ function WorkDetailModal({
         </div>
         <div className="p-8">
           <span className="inline-block px-3.5 py-1.5 bg-secondary/[0.08] text-secondary text-sm font-medium rounded-full mb-4">
-            {work.category}
+            {t.works.categories[work.category] ?? work.category}
           </span>
           <h2 className="font-display text-2xl font-bold text-textPrimary mb-3 tracking-tight">
             {work.title}
@@ -57,7 +59,9 @@ function WorkDetailModal({
             {work.description}
           </p>
           <div className="flex items-center justify-between text-sm text-textMuted border-t border-white/[0.04] pt-5">
-            <span>创作者：{work.author}</span>
+            <span>
+              {t.works.author}: {work.author}
+            </span>
             <span>{work.date}</span>
           </div>
         </div>
@@ -68,6 +72,7 @@ function WorkDetailModal({
 
 export function WorksPage() {
   const { works, removeWork } = useStore();
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState("全部");
   const [selectedWork, setSelectedWork] = useState<(typeof works)[0] | null>(null);
 
@@ -79,9 +84,9 @@ export function WorksPage() {
   return (
     <div className="min-h-screen">
       <SEO
-        title={`作品集 — ${BRAND.name}`}
-        description={`浏览 ${BRAND.name} 精选作品：大学时期与职场个人创作。`}
-        keywords={`${BRAND.name}, 作品集, 设计, 开发, 大学作品`}
+        title={t.seo.works.title}
+        description={t.seo.works.description}
+        keywords={t.seo.works.keywords}
         canonical="/works"
       />
       <section className="pt-28 md:pt-36 pb-16">
@@ -89,13 +94,14 @@ export function WorksPage() {
           <AnimatedSection className="text-center mb-20">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/[0.06] text-secondary text-sm font-medium mb-6 border border-secondary/[0.1]">
               <Palette className="w-4 h-4" />
-              创意展示
+              {t.works.badge}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-textPrimary mb-4 tracking-tight">
-              我们的 <span className="gradient-text-static">作品集</span>
+              {t.works.title}{" "}
+              <span className="gradient-text-static">{t.works.titleHighlight}</span>
             </h1>
             <p className="text-textSecondary max-w-xl mx-auto text-balance">
-              从大学到职场，记录每一次真实的创造。更多作品整理上传中。
+              {t.works.subtitle}
             </p>
           </AnimatedSection>
 
@@ -110,7 +116,7 @@ export function WorksPage() {
                     : "bg-white/[0.03] border border-white/[0.05] text-textSecondary hover:bg-white/[0.06] hover:text-textPrimary"
                 }`}
               >
-                {category}
+                {t.works.categories[category] ?? category}
               </button>
             ))}
           </AnimatedSection>
@@ -144,7 +150,7 @@ export function WorksPage() {
                     <div className="p-5">
                       <div className="flex items-start justify-between mb-2">
                         <span className="text-xs font-semibold text-secondary bg-secondary/[0.08] px-2.5 py-1 rounded-full uppercase tracking-wide">
-                          {work.category}
+                          {t.works.categories[work.category] ?? work.category}
                         </span>
                         <button
                           onClick={() => removeWork(work.id)}
@@ -176,7 +182,7 @@ export function WorksPage() {
           {filteredWorks.length === 0 && (
             <AnimatedSection className="text-center py-24">
               <Palette className="w-16 h-16 text-textMuted mx-auto mb-4 opacity-40" />
-              <p className="text-textSecondary">该分类下暂无作品</p>
+              <p className="text-textSecondary">{t.works.emptyCategory}</p>
             </AnimatedSection>
           )}
         </div>

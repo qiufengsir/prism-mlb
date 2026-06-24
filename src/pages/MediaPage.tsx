@@ -4,7 +4,8 @@ import { X, Play, ImageIcon, Film, Trash2 } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { useStore } from "@/store/useStore";
-import { BRAND } from "@/data/brand";
+import { formatText } from "@/i18n";
+import { useTranslation } from "@/hooks/useTranslation";
 
 function PhotoModal({
   photo,
@@ -91,6 +92,7 @@ function VideoModal({
 
 export function MediaPage() {
   const { media, removeMedia } = useStore();
+  const { t } = useTranslation();
   const [selectedPhoto, setSelectedPhoto] = useState<(typeof media)[0] | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<(typeof media)[0] | null>(null);
 
@@ -100,9 +102,9 @@ export function MediaPage() {
   return (
     <div className="min-h-screen">
       <SEO
-        title={`媒体库 — ${BRAND.name}`}
-        description={`探索 ${BRAND.name} 的图片、视频与品牌资源。`}
-        keywords={`${BRAND.name}, 媒体库, 图片, 视频`}
+        title={t.seo.media.title}
+        description={t.seo.media.description}
+        keywords={t.seo.media.keywords}
         canonical="/media"
       />
       <section className="pt-28 md:pt-36 pb-16">
@@ -110,13 +112,14 @@ export function MediaPage() {
           <AnimatedSection className="text-center mb-20">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/[0.06] text-primary text-sm font-medium mb-6 border border-primary/[0.1]">
               <ImageIcon className="w-4 h-4" />
-              媒体资源
+              {t.media.badge}
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-textPrimary mb-4 tracking-tight">
-              我们的 <span className="gradient-text-static">媒体库</span>
+              {t.media.title}{" "}
+              <span className="gradient-text-static">{t.media.titleHighlight}</span>
             </h1>
             <p className="text-textSecondary max-w-xl mx-auto text-balance">
-              记录团队的美好瞬间，分享我们的故事
+              {t.media.subtitle}
             </p>
           </AnimatedSection>
 
@@ -128,9 +131,9 @@ export function MediaPage() {
                 </div>
                 <div>
                   <h2 className="font-display text-2xl font-bold text-textPrimary tracking-tight">
-                    照片墙
+                    {t.media.photoWall}
                   </h2>
-                  <span className="text-textMuted text-sm">共 {photos.length} 张</span>
+                  <span className="text-textMuted text-sm">{formatText(t.media.photoCount, { count: photos.length })}</span>
                 </div>
               </AnimatedSection>
 
@@ -183,9 +186,9 @@ export function MediaPage() {
                 </div>
                 <div>
                   <h2 className="font-display text-2xl font-bold text-textPrimary tracking-tight">
-                    视频
+                    {t.media.videos}
                   </h2>
-                  <span className="text-textMuted text-sm">共 {videos.length} 部</span>
+                  <span className="text-textMuted text-sm">{formatText(t.media.videoCount, { count: videos.length })}</span>
                 </div>
               </AnimatedSection>
 
@@ -232,7 +235,7 @@ export function MediaPage() {
           {media.length === 0 && (
             <AnimatedSection className="text-center py-24">
               <ImageIcon className="w-16 h-16 text-textMuted mx-auto mb-4 opacity-40" />
-              <p className="text-textSecondary">暂无媒体内容</p>
+              <p className="text-textSecondary">{t.media.empty}</p>
             </AnimatedSection>
           )}
         </div>

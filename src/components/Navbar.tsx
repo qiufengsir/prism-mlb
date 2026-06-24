@@ -3,20 +3,23 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles } from "lucide-react";
 import { BRAND } from "@/data/brand";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useTranslation } from "@/hooks/useTranslation";
 
-const navItems = [
-  { path: "/", label: "首页" },
-  { path: "/team", label: "团队名片" },
-  { path: "/works", label: "作品集" },
-  { path: "/projects", label: "项目集" },
-  { path: "/media", label: "媒体库" },
-  { path: "/about", label: "关于我们" },
+const navPaths = [
+  { path: "/", key: "home" as const },
+  { path: "/team", key: "team" as const },
+  { path: "/works", key: "works" as const },
+  { path: "/projects", key: "projects" as const },
+  { path: "/media", key: "media" as const },
+  { path: "/about", key: "about" as const },
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,8 +66,8 @@ export function Navbar() {
               </span>
             </Link>
 
-            <div className="hidden md:flex items-center gap-0.5">
-              {navItems.map((item) => {
+            <div className="hidden md:flex items-center gap-1">
+              {navPaths.map((item) => {
                 const isActive = location.pathname === item.path;
                 return (
                   <Link
@@ -83,19 +86,23 @@ export function Navbar() {
                         transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
                       />
                     )}
-                    <span className="relative z-10">{item.label}</span>
+                    <span className="relative z-10">{t.nav[item.key]}</span>
                   </Link>
                 );
               })}
+              <LanguageSwitcher className="ml-2" />
             </div>
 
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 -mr-2 text-textSecondary hover:text-textPrimary transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            <div className="flex md:hidden items-center gap-1">
+              <LanguageSwitcher />
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 -mr-2 text-textSecondary hover:text-textPrimary transition-colors"
+                aria-label="Toggle menu"
+              >
+                {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -110,7 +117,7 @@ export function Navbar() {
             className="fixed inset-0 z-40 bg-background/95 backdrop-blur-2xl pt-20"
           >
             <div className="flex flex-col items-center gap-1 p-4">
-              {navItems.map((item, index) => (
+              {navPaths.map((item, index) => (
                 <motion.div
                   key={item.path}
                   initial={{ opacity: 0, y: 16 }}
@@ -127,7 +134,7 @@ export function Navbar() {
                         : "text-textSecondary hover:text-textPrimary hover:bg-white/[0.03]"
                     }`}
                   >
-                    {item.label}
+                    {t.nav[item.key]}
                   </Link>
                 </motion.div>
               ))}

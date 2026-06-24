@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
 import { Sparkles, Github, Mail, Heart, ArrowUpRight } from "lucide-react";
-import { motion } from "framer-motion";
 import { BRAND } from "@/data/brand";
+import { useTranslation } from "@/hooks/useTranslation";
 
-const footerLinks = [
-  { path: "/team", label: "团队名片" },
-  { path: "/works", label: "作品集" },
-  { path: "/projects", label: "项目集" },
-  { path: "/media", label: "媒体库" },
-  { path: "/about", label: "关于我们" },
+const footerPaths = [
+  { path: "/team", key: "team" as const },
+  { path: "/works", key: "works" as const },
+  { path: "/projects", key: "projects" as const },
+  { path: "/media", key: "media" as const },
+  { path: "/about", key: "about" as const },
 ];
 
 export function Footer() {
+  const { t } = useTranslation();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -29,7 +31,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-textSecondary text-sm leading-relaxed max-w-sm">
-              {BRAND.subtitle} — {BRAND.taglineZh}
+              {t.brand.subtitle} — {t.brand.tagline}
             </p>
             <div className="flex items-center gap-3 pt-2">
               <a
@@ -51,16 +53,16 @@ export function Footer() {
 
           <div className="md:col-span-3">
             <h3 className="font-semibold text-textPrimary text-sm uppercase tracking-widest mb-5 opacity-80">
-              快速链接
+              {t.common.quickLinks}
             </h3>
             <ul className="space-y-3">
-              {footerLinks.map((link) => (
+              {footerPaths.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
                     className="text-textSecondary hover:text-primary transition-colors duration-200 text-sm flex items-center gap-1 group w-fit"
                   >
-                    {link.label}
+                    {t.nav[link.key]}
                     <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-0.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200" />
                   </Link>
                 </li>
@@ -70,7 +72,7 @@ export function Footer() {
 
           <div className="md:col-span-4">
             <h3 className="font-semibold text-textPrimary text-sm uppercase tracking-widest mb-5 opacity-80">
-              联系我们
+              {t.common.contactUs}
             </h3>
             <div className="space-y-3">
               <a
@@ -86,7 +88,7 @@ export function Footer() {
                 <span className="w-8 h-8 rounded-lg bg-primary/[0.08] flex items-center justify-center">
                   <span className="text-primary text-xs">📍</span>
                 </span>
-                中国 · 上海
+                {t.common.location}
               </div>
             </div>
           </div>
@@ -94,17 +96,17 @@ export function Footer() {
 
         <div className="mt-14 pt-8 border-t border-white/[0.04] flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-textMuted text-xs">
-            &copy; {new Date().getFullYear()} {BRAND.name}. All rights reserved.
+            &copy; {new Date().getFullYear()} {BRAND.name}. {t.common.rights}
           </p>
           <div className="flex items-center gap-6">
             <p className="text-textMuted text-xs flex items-center gap-1.5">
-              Made with <Heart className="w-3 h-3 text-secondary animate-pulse" /> by {BRAND.teamName}
+              {t.common.madeWith} <Heart className="w-3 h-3 text-secondary animate-pulse" /> by {BRAND.teamName}
             </p>
             <button
               onClick={scrollToTop}
               className="text-textMuted hover:text-primary transition-colors text-xs"
             >
-              ↑ 回到顶部
+              {t.common.backToTop}
             </button>
           </div>
         </div>

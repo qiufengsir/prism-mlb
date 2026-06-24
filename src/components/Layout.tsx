@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
+import { LocaleSync } from "@/hooks/useTranslation";
 
 interface LayoutProps {
   children: ReactNode;
@@ -19,6 +20,7 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-background text-textPrimary">
+      <LocaleSync />
       <Navbar />
       <AnimatePresence mode="wait">
         <motion.main
