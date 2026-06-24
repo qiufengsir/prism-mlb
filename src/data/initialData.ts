@@ -74,7 +74,7 @@ export const initialTeamMembers: TeamMember[] = [
   },
   {
     id: "3",
-    name: "杨霖",
+    name: "杨霖(Lyn)",
     role: "视觉设计师",
     avatar: "",
     bio: "擅长将抽象概念转化为清晰、干净的视觉语言。关注设计与开发的协作效率，配合 AI 工具加速设计迭代。",
