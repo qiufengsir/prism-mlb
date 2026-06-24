@@ -36,9 +36,25 @@ git push -u origin main
 | Framework preset | Vite |
 | Build command | `npm run build` |
 | Build output directory | `dist` |
-| Environment variable | `NODE_VERSION=20` |
+| **Deploy command** | `npx wrangler deploy` |
+| Environment variable | `NODE_VERSION=22` |
+
+> **说明**：新版 Cloudflare 若 **Deploy command 为必填**，应填写 `npx wrangler deploy`（不是 `wrangler pages deploy`）。项目根目录的 [`wrangler.toml`](../wrangler.toml) 已配置 `[assets] directory = "./dist"`，构建完成后 Wrangler 会上传静态文件。Wrangler 4 要求 **Node.js 22+**，请在环境变量中设置 `NODE_VERSION=22`（不影响 Vite/React 代码）。
 
 5. **Save and Deploy**，通过 `xxx.pages.dev` 预览
+
+### 构建失败排查
+
+**错误：`Wrangler requires at least Node.js v22.0.0`**
+
+- 在 Pages → **Settings** → **Environment variables** 添加 `NODE_VERSION` = `22`
+- Deploy command 保持 `npx wrangler deploy`
+- 重新部署
+
+**错误：Deploy command 使用了错误的命令**
+
+- 不要用 `npx wrangler pages deploy`（旧版 Pages CLI）
+- 必填时应使用 `npx wrangler deploy`，并确保仓库内 `wrangler.toml` 含 `[assets]` 配置
 
 ## 三、绑定域名 prism-mlb.top
 
@@ -59,7 +75,7 @@ git push -u origin main
 
 ```bash
 npm run build
-npx wrangler pages deploy dist --project-name=dream-of-youth
+npx wrangler deploy
 ```
 
 首次运行需登录 Cloudflare。部署后在 Dashboard 绑定自定义域名。

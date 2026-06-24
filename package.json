@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "check": "tsc -b --noEmit",
-    "deploy:pages": "npm run build && wrangler pages deploy dist --project-name=dream-of-youth"
+    "deploy:pages": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "clsx": "^2.1.1",
