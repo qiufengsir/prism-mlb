@@ -51,10 +51,10 @@ git push -u origin main
 - Deploy command 保持 `npx wrangler deploy`
 - 重新部署
 
-**错误：Deploy command 使用了错误的命令**
+**错误：`Invalid _redirects configuration: Infinite loop detected`**
 
-- 不要用 `npx wrangler pages deploy`（旧版 Pages CLI）
-- 必填时应使用 `npx wrangler deploy`，并确保仓库内 `wrangler.toml` 含 `[assets]` 配置
+- 删除 `public/_redirects`（本项目已通过预渲染生成各路由的 `index.html`，不需要 SPA 回退规则）
+- `/* /index.html 200` 在 `wrangler deploy` 下会触发无限循环
 
 ## 三、绑定域名 prism-mlb.top
 
