@@ -8,11 +8,25 @@ import {
   ChevronDown,
   ArrowRight,
   Sparkles,
+  Bot,
+  Workflow,
+  Brain,
+  Rocket,
 } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { CountUp } from "@/components/CountUp";
 import { SEO } from "@/components/SEO";
 import { useStore } from "@/store/useStore";
+import { BRAND, BRAND_SEO, CAPABILITIES } from "@/data/brand";
+
+const capabilityIcons = [Bot, Workflow, Brain, Rocket];
+const capabilityColors = [
+  "from-primary/20 to-primary/5",
+  "from-secondary/20 to-secondary/5",
+  "from-accent/20 to-accent/5",
+  "from-glowPurple/20 to-primary/5",
+];
+const capabilityIconColors = ["text-primary", "text-secondary", "text-accent", "text-glowPurple"];
 
 const quickNavItems = [
   {
@@ -127,7 +141,7 @@ function HeroSection() {
         >
           <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-textSecondary text-sm font-medium mb-8 backdrop-blur-sm">
             <Sparkles className="w-4 h-4 text-primary" />
-            青春 · 梦想 · 创意
+            AI Agent · 高效编码 · 产品落地
           </span>
         </motion.div>
 
@@ -135,12 +149,28 @@ function HeroSection() {
           initial={{ opacity: 0, y: 40, filter: "blur(4px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-none tracking-tight"
+          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-4 leading-none tracking-tight"
         >
-          <span className="gradient-text">Dream</span>
-          <span className="text-textPrimary"> of </span>
-          <span className="gradient-text">Youth</span>
+          <span className="gradient-text">{BRAND.name}</span>
         </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="text-base md:text-lg text-textSecondary mb-3 font-medium tracking-wide"
+        >
+          {BRAND.subtitle}
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.62, ease: [0.22, 1, 0.36, 1] }}
+          className="text-sm md:text-base text-primary/90 mb-8 font-light italic"
+        >
+          {BRAND.tagline}
+        </motion.p>
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}
@@ -148,7 +178,7 @@ function HeroSection() {
           transition={{ duration: 0.9, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-lg md:text-xl text-textSecondary max-w-2xl mx-auto mb-12 leading-relaxed font-light text-balance"
         >
-          我们是一支充满激情的年轻创意团队，用设计和技术为世界带来美好改变
+          我们是一支从校园走向职场的私人团队，擅长运用 AI Agent、Harness 架构、Skills 与 Memory 等方法，把想法高效编码、快速落地为真实产品。
         </motion.p>
 
         <motion.div
@@ -193,6 +223,42 @@ function HeroSection() {
   );
 }
 
+function CapabilitiesSection() {
+  return (
+    <section className="py-24 md:py-36 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimatedSection className="text-center mb-20">
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-textPrimary mb-4 tracking-tight">
+            我们擅长 <span className="gradient-text-static">什么</span>
+          </h2>
+          <p className="text-textSecondary max-w-lg mx-auto text-balance">
+            不只是写代码，而是搭建一套可复用的 AI 驱动工作流
+          </p>
+        </AnimatedSection>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {CAPABILITIES.map((item, index) => {
+            const Icon = capabilityIcons[index];
+            return (
+              <AnimatedSection key={item.title} delay={index * 0.1}>
+                <div className="glass-card rounded-2xl p-6 md:p-7 h-full hover:-translate-y-1 transition-transform duration-300">
+                  <div
+                    className={`w-12 h-12 rounded-xl bg-gradient-to-br ${capabilityColors[index]} flex items-center justify-center mb-5`}
+                  >
+                    <Icon className={`w-5 h-5 ${capabilityIconColors[index]}`} />
+                  </div>
+                  <h3 className="font-semibold text-textPrimary text-lg mb-2">{item.title}</h3>
+                  <p className="text-textSecondary text-sm leading-relaxed">{item.description}</p>
+                </div>
+              </AnimatedSection>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function StatsSection() {
   const { teamMembers, works, projects, media } = useStore();
 
@@ -209,10 +275,10 @@ function StatsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection className="text-center mb-20">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-textPrimary mb-4 tracking-tight">
-            用数字 <span className="gradient-text-static">说话</span>
+            用作品 <span className="gradient-text-static">说话</span>
           </h2>
           <p className="text-textSecondary max-w-lg mx-auto text-balance">
-            每一个数字背后，都是我们的努力与坚持
+            每一个数字背后，都是一次真实的投入与落地
           </p>
         </AnimatedSection>
 
@@ -246,10 +312,10 @@ function FeaturedSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection className="text-center mb-20">
           <h2 className="font-display text-3xl md:text-4xl font-bold text-textPrimary mb-4 tracking-tight">
-            精选 <span className="gradient-text-static">展示</span>
+            我们的 <span className="gradient-text-static">作品</span>
           </h2>
           <p className="text-textSecondary max-w-lg mx-auto text-balance">
-            看看我们最近的创作与成果
+            从大学到职场，记录每一次真实的创造
           </p>
         </AnimatedSection>
 
@@ -387,12 +453,13 @@ export function HomePage() {
   return (
     <div>
       <SEO
-        title="Dream of Youth — 青春梦想团队"
-        description="Dream of Youth 是一支充满激情的年轻创意团队，致力于用设计和技术为世界带来美好改变。"
-        keywords="Dream of Youth, 青春梦想团队, 创意团队, 设计, 开发, 作品集"
+        title={BRAND_SEO.defaultTitle}
+        description={BRAND_SEO.defaultDescription}
+        keywords={BRAND_SEO.defaultKeywords}
         canonical="/"
       />
       <HeroSection />
+      <CapabilitiesSection />
       <StatsSection />
       <FeaturedSection />
       <QuickNavSection />
