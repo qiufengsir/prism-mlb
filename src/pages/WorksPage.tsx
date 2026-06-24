@@ -4,6 +4,7 @@ import { X, Palette, Trash2 } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { useStore } from "@/store/useStore";
+import { BRAND } from "@/data/brand";
 import { initialWorks } from "@/data/initialData";
 
 const categories = ["全部", "设计", "摄影", "视频", "其他"];
@@ -78,9 +79,9 @@ export function WorksPage() {
   return (
     <div className="min-h-screen">
       <SEO
-        title="作品集 — Dream of Youth"
-        description="浏览 Dream of Youth 精选的设计与开发项目，发现创意与技术的完美融合。"
-        keywords="Dream of Youth, 作品集, 设计, 开发, 项目展示"
+        title={`作品集 — ${BRAND.name}`}
+        description={`浏览 ${BRAND.name} 精选作品：大学时期与职场个人创作。`}
+        keywords={`${BRAND.name}, 作品集, 设计, 开发, 大学作品`}
         canonical="/works"
       />
       <section className="pt-28 md:pt-36 pb-16">
@@ -94,7 +95,7 @@ export function WorksPage() {
               我们的 <span className="gradient-text-static">作品集</span>
             </h1>
             <p className="text-textSecondary max-w-xl mx-auto text-balance">
-              每一件作品都承载着我们的热情与创意
+              从大学到职场，记录每一次真实的创造。更多作品整理上传中。
             </p>
           </AnimatedSection>
 

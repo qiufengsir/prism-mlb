@@ -16,36 +16,37 @@ import {
 } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
+import { BRAND } from "@/data/brand";
 
 const values = [
   {
     icon: Target,
-    title: "追求卓越",
-    description: "不满足于平庸，每一件作品都力求完美",
+    title: "专业落地",
+    description: "用可交付的产品说话，每一次输出都追求完整与可靠",
     color: "from-primary/20 to-primary/5",
     iconColor: "text-primary",
     iconBg: "bg-primary/[0.08]",
   },
   {
     icon: Heart,
-    title: "热爱创造",
-    description: "用热情驱动创新，让创意成为习惯",
+    title: "真诚协作",
+    description: "从校园到职场，以真实与信任作为团队合作的基础",
     color: "from-secondary/20 to-secondary/5",
     iconColor: "text-secondary",
     iconBg: "bg-secondary/[0.08]",
   },
   {
     icon: Zap,
-    title: "快速迭代",
-    description: "敏捷高效，持续改进，快速响应变化",
+    title: "AI 提效",
+    description: "善用 Agent、Harness、Skills 与 Memory，让创造更高效",
     color: "from-accent/20 to-accent/5",
     iconColor: "text-accent",
     iconBg: "bg-accent/[0.08]",
   },
   {
     icon: Sparkles,
-    title: "开放协作",
-    description: "拥抱多元，开放分享，共同成长",
+    title: "持续成长",
+    description: "保持学习与实践，在业余时间里不断拓展能力边界",
     color: "from-glowPurple/20 to-primary/5",
     iconColor: "text-primary",
     iconBg: "bg-primary/[0.08]",
@@ -78,9 +79,9 @@ export function AboutPage() {
   return (
     <div className="min-h-screen">
       <SEO
-        title="关于我们 — Dream of Youth"
-        description="了解 Dream of Youth 的愿景、使命与发展历程。"
-        keywords="Dream of Youth, 关于我们, 愿景, 使命, 团队介绍"
+        title={`关于我们 — ${BRAND.name}`}
+        description={`了解 ${BRAND.name} 的愿景与使命：${BRAND.tagline}`}
+        keywords={`${BRAND.name}, Prism, 关于我们, 愿景, AI Agent`}
         canonical="/about"
       />
       <section className="pt-28 md:pt-36 pb-16">
@@ -94,8 +95,8 @@ export function AboutPage() {
               我们的 <span className="gradient-text-static">故事</span>
             </h1>
             <p className="text-textSecondary max-w-2xl mx-auto text-lg leading-relaxed text-balance">
-              Dream of Youth 诞生于对创意的热爱和对技术的追求。我们相信，年轻人拥有改变世界的力量，
-              而我们要做的，就是将这份力量汇聚成光。
+              {BRAND.name}，{BRAND.subtitle}。我们从校园出发，在工作里继续以业余团队的方式创造。
+              我们相信 AI 不是替代年轻人，而是放大年轻人的创造力——{BRAND.tagline}。
             </p>
           </AnimatedSection>
 
@@ -106,15 +107,13 @@ export function AboutPage() {
                   我们的愿景
                 </h2>
                 <p className="text-textSecondary leading-relaxed mb-8">
-                  成为最具影响力的年轻创意团队，用设计和技术为品牌创造价值，
-                  为用户带来惊喜。我们追求的不仅是商业上的成功，更是通过我们的作品，
-                  传递正能量，激发更多年轻人的创造潜能。
+                  成为一支用 AI 放大青年创造力的产品团队，以专业、干净、真诚的方式，
+                  将想法高效落地为真实可用的产品，用作品证明能力。
                 </p>
                 <div className="relative p-6 bg-gradient-to-br from-primary/[0.04] to-secondary/[0.04] rounded-xl border border-white/[0.04]">
                   <span className="absolute top-4 left-4 text-6xl text-primary/10 font-serif leading-none select-none">&ldquo;</span>
                   <p className="text-textPrimary italic relative z-10 pl-6 leading-relaxed">
-                    青春不是年华，而是心境；不是桃面、丹唇、柔膝，
-                    而是深沉的意志、恢宏的想象、炽热的感情。
+                    {BRAND.tagline}
                   </p>
                 </div>
               </div>
@@ -126,15 +125,15 @@ export function AboutPage() {
                   我们的使命
                 </h2>
                 <p className="text-textSecondary leading-relaxed mb-8">
-                  为每一个有梦想的团队和个人，提供最专业的创意服务和技术支持。
-                  我们致力于将前沿技术与艺术美学完美融合，打造令人惊叹的数字体验。
+                  为每一位有梦想的年轻人，提供从 AI 辅助编码到产品落地的完整能力展示。
+                  我们致力于将前沿 AI 工作流与扎实的产品思维结合，打造干净、专业、可信赖的数字体验。
                 </p>
                 <div className="space-y-3.5">
                   {[
-                    "提供卓越的设计与开发服务",
-                    "培养年轻创意人才",
-                    "推动行业创新与发展",
-                    "创造有社会价值的作品",
+                    "展示 AI Agent 驱动的产品落地能力",
+                    "记录从校园到职场的真实作品",
+                    "持续探索 Harness、Skills 与 Memory 工作流",
+                    "以真诚态度对待每一次合作与创造",
                   ].map((item, index) => (
                     <div key={index} className="flex items-center gap-3.5">
                       <div className="w-6 h-6 rounded-full bg-primary/[0.08] flex items-center justify-center flex-shrink-0">

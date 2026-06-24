@@ -4,6 +4,7 @@ import { X, ExternalLink, FolderGit2, Trash2, Users } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { useStore } from "@/store/useStore";
+import { BRAND } from "@/data/brand";
 import type { Project } from "@/data/initialData";
 
 function ProjectDetailModal({
@@ -107,9 +108,9 @@ export function ProjectsPage() {
   return (
     <div className="min-h-screen">
       <SEO
-        title="项目案例 — Dream of Youth"
-        description="深入了解 Dream of Youth 最具代表性的项目案例与解决方案。"
-        keywords="Dream of Youth, 项目案例, 解决方案, 创意项目"
+        title={`项目案例 — ${BRAND.name}`}
+        description={`深入了解 ${BRAND.name} 的项目案例与 AI 驱动的产品解决方案。`}
+        keywords={`${BRAND.name}, 项目案例, AI Agent, 解决方案`}
         canonical="/projects"
       />
       <section className="pt-28 md:pt-36 pb-16">
@@ -123,7 +124,7 @@ export function ProjectsPage() {
               我们的 <span className="gradient-text-static">项目集</span>
             </h1>
             <p className="text-textSecondary max-w-xl mx-auto text-balance">
-              每个项目都是我们用心打造的作品，展现团队的技术实力
+              深度项目案例筹备中，敬请期待。现阶段请浏览我们的作品集。
             </p>
           </AnimatedSection>
 

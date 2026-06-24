@@ -4,6 +4,7 @@ import { X, Play, ImageIcon, Film, Trash2 } from "lucide-react";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { useStore } from "@/store/useStore";
+import { BRAND } from "@/data/brand";
 
 function PhotoModal({
   photo,
@@ -99,9 +100,9 @@ export function MediaPage() {
   return (
     <div className="min-h-screen">
       <SEO
-        title="媒体库 — Dream of Youth"
-        description="探索 Dream of Youth 的图片、视频与品牌资源。"
-        keywords="Dream of Youth, 媒体库, 图片, 视频, 品牌资源"
+        title={`媒体库 — ${BRAND.name}`}
+        description={`探索 ${BRAND.name} 的图片、视频与品牌资源。`}
+        keywords={`${BRAND.name}, 媒体库, 图片, 视频`}
         canonical="/media"
       />
       <section className="pt-28 md:pt-36 pb-16">
