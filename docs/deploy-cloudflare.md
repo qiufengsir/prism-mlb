@@ -28,7 +28,7 @@ git push -u origin main
 
 1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)
 2. **Workers & Pages → Create → Pages → Connect to Git**
-3. 选择 GitHub 仓库
+3. 选择 GitHub 仓库 **`qiufengsir/prism-mlb`**
 4. 构建配置：
 
 | 配置项 | 值 |
