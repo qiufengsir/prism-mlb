@@ -20,7 +20,7 @@ git init
 git add .
 git commit -m "Initial commit: Dream of Youth site"
 git branch -M main
-git remote add origin https://github.com/<你的用户名>/dream-of-youth.git
+git remote add origin https://github.com/qiufengsir/prism-mlb.git
 git push -u origin main
 ```
 
