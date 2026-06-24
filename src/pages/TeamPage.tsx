@@ -17,6 +17,7 @@ import {
 import { AnimatedSection } from "@/components/AnimatedSection";
 import { SEO } from "@/components/SEO";
 import { useStore } from "@/store/useStore";
+import { BRAND } from "@/data/brand";
 import type { TeamMember } from "@/data/initialData";
 
 function TeamCard({ member, onDelete }: { member: TeamMember; onDelete: (id: string) => void }) {
@@ -353,9 +354,9 @@ export function TeamPage() {
   return (
     <div className="min-h-screen">
       <SEO
-        title="团队介绍 — Dream of Youth"
-        description="认识 Dream of Youth 团队的核心成员，了解我们的专长、故事与创作理念。"
-        keywords="Dream of Youth, 团队介绍, 成员, 创意团队"
+        title={`团队介绍 — ${BRAND.name}`}
+        description={`认识 ${BRAND.name} 核心成员：AI Agent 驱动开发、全栈落地、视觉设计与产品顾问，从校园到职场的私人创意团队。`}
+        keywords={`${BRAND.name}, Prism, 团队介绍, AI Agent, 成员`}
         canonical="/team"
       />
       <section className="pt-28 md:pt-36 pb-16">
@@ -366,10 +367,13 @@ export function TeamPage() {
               我们的团队
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-textPrimary mb-4 tracking-tight">
-              认识 <span className="gradient-text-static">Dream of Youth</span>
+              认识 <span className="gradient-text-static">{BRAND.name}</span>
             </h1>
-            <p className="text-textSecondary max-w-xl mx-auto text-balance">
-              一群充满热情的年轻人，用创意和技术创造无限可能
+            <p className="text-textSecondary max-w-2xl mx-auto text-balance mb-2">
+              {BRAND.subtitle} — 每个人都是一束光，合在一起才能折射更多可能。
+            </p>
+            <p className="text-textMuted max-w-2xl mx-auto text-sm text-balance">
+              我们从校园出发，在工作里继续以业余团队的方式创造。用 AI 提升效率，用作品证明能力，用真诚对待每一次合作。
             </p>
           </AnimatedSection>
 
